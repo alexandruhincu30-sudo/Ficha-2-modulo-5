@@ -1,0 +1,50 @@
+#include <stdio.h>
+struct tag_rajadas {
+	int mes[12];
+	int rajadas[12];
+
+	int y;
+}temp;
+int main()
+{
+	int ano, op, mes,i,vel;
+	printf("Insere o ano dos dados analisados: ");
+	scanf("%d", &ano);
+	if(ano<1900||ano>2100)
+	{
+		printf("O valor é invalido");
+		return(0);
+	}
+	do {
+		printf("1-Inserir o valor maximo da rajada de vento de um mes\n");
+		printf("2-Apagar um valor ja inserido\n");
+		printf("3-media e mediana dos valores da rajada de vento\n");
+		printf("0-Terminar o programa\n");
+		printf("INSERE A OPCAO: ");
+		scanf("%d", &op);
+
+		switch (op) {
+		case (1):
+			do {
+				printf("Insere o mes: ");
+				scanf("%d",&i);
+				if(i<1||i>12)
+					printf("Valor Invalido");
+
+				while(i<1||i>12);
+				do {
+				printf("Insere os valores da velocidade maxima das rajadas nesse mes(em km): ");
+				scanf("%d", &vel);
+				if(vel<18||vel>100)
+					printf("Valor Invalido");
+				while(vel<18||vel>100);
+				if(temp.rajadas[i]>0)
+				{
+					printf("Ja existe um valor dentro desse mes desejas trocar o valor 
+				temp.rajadas[i]=vel
+				
+
+
+
+
+
