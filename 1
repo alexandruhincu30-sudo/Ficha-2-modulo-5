@@ -1,5 +1,48 @@
+tatic float media(const int valores[], int quantidade)
+{
+	int soma = 0;
+	int i;
+
+	for (i = 0; i < quantidade; i++)
+		soma += valores[i];
+
+	return (float)soma / quantidade;
+}
+
+static float mediana(int valores[], int quantidade)
+{
+	int i, j, aux;
+
+	for (i = 0; i < quantidade - 1; i++)
+	{
+		for (j = i + 1; j < quantidade; j++)
+		{
+			if (valores[i] > valores[j])
+			{
+				aux = valores[i];
+				valores[i] = valores[j];
+				valores[j] = aux;
+			}
+		}
+	}
+
+	if (quantidade % 2 == 0)
+		return (valores[quantidade / 2 - 1] + valores[quantidade / 2]) / 2.0f;
+
+	return valores[quantidade / 2];
+}
+	
+int EntreAB(int min, int max, int valor)
+{
+	if (valor >= min && valor <= max)
+		return 1;
+
+	return 0;
+}
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include "Valid.h"
+#include "EntreAB.h"
+#include "MediaMediana.h"
 
 struct tag_rajadas {
 	int mes[12];
@@ -8,10 +51,13 @@ struct tag_rajadas {
 }temp;
 int main()
 {
-	int ano, op, mes,i,vel,dec;
+	int ano = 0, op = 0, i = 0, vel = 0, dec = 0;
+	int idx;
+	int valores[12];
+	int quantidade;
 	printf("Insere o ano dos dados analisados: ");
 	scanf("%d", &ano);
-	if(EntreAB(1900,2100,ano)==0)
+	if (EntreAB(1900, 2100, ano) == 0)
 	{
 		printf("O valor é invalido");
 		return(0);
@@ -37,7 +83,7 @@ int main()
 				scanf("%d", &vel);
 			} while (EntreAB(15, 408, vel) == 0);
 
-			int idx = i - 1;
+			idx = i - 1;
 
 			if (temp.rajadas[idx] != 0) {
 				do {
@@ -46,18 +92,64 @@ int main()
 				} while (EntreAB(1, 2, dec) == 0);
 
 				if (dec == 1)
-					temp.mes[idx] = vel;
-			} else {
-				temp.mes[idx] = vel;
+					temp.rajadas[idx] = vel;
+			}
+			else {
+				temp.rajadas[idx] = vel;
+			}
+			break;
+
+		case 2:
+			do {
+				printf("Insere o mes (1-12): ");
+				scanf("%d", &i);
+			} while (EntreAB(1, 12, i) == 0);
+			if (temp.rajadas[i - 1] == 0)
+			{
+				printf("Nao existe nenhum valor para esse mes");
+			}
+			else
+			{
+				printf("O valor do mes %d e: %d", i, temp.rajadas[i - 1]);
+			}
+
+			if (temp.rajadas[i - 1] != 0) {
+				temp.rajadas[i - 1] = 0;
+			}
+			break;
+
+		case 3:
+			quantidade = 0;
+
+			for (idx = 0; idx < 12; idx++)
+			{
+				if (temp.rajadas[idx] != 0)
+				{
+					valores[quantidade] = temp.rajadas[idx];
+					quantidade++;
+				}
+			}
+
+			if (quantidade == 0)
+			{
+				printf("Ainda nao existem valores inseridos.\n");
+			}
+			else
+			{
+				printf("A media das rajadas de vento e: %.2f\n", media(valores, quantidade));
+				printf("A mediana das rajadas de vento e: %.2f\n", mediana(valores, quantidade));
 			}
 			break;
 		}
-		
-		}while(op!=0);
+	} while (op != 0);
 
+	printf("\nValores das rajadas de vento por mes:\n");
+	for (i = 0; i < 12; i++)
+	{
+		if (temp.rajadas[i] != 0)
+			printf("Mes %d: %d km/h\n", i + 1, temp.rajadas[i]);
+	}
 
-
-
-
-
+	return 0;
+}
 
